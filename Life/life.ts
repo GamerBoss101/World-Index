@@ -1,0 +1,6 @@
+
+class Life {
+    constructor() {
+        this
+    }
+}
