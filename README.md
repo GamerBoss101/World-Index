@@ -7,7 +7,7 @@ A Library of random things turned into code using any coding Language you want. 
 <h2 href="#rules">Rules</h2>
 
 1. Try to keep it SFW 
-2. Don't delete other peoples code 
+2. Don't delete other peoples code **Try to improve it**
 3. You can make new folders and files just make sure you organize them
 
 ## Testing code
