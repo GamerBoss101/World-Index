@@ -9,3 +9,6 @@ A Library of random things turned into code using any coding Language you want. 
 1. Try to keep it SFW 
 2. Don't delete other peoples code 
 3. You can make new folders and files just make sure you organize them
+
+## Testing code
+To Test your code create a folder named `Testing` . This folder will be ignored when commiting to the repository.
