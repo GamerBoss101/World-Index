@@ -1,25 +1,25 @@
+#pragma once
+
 #include <iostream>
 #include <string>
-
-using namespace std;
 
 enum Sex { a, b, intersex };
 enum Gender { male, female, other };
 enum Food { pizza };
-static const string FoodStrings = { "pizza" };
+static const std::string FoodStrings = { "pizza" };
 enum Drink { water, coffee };
-static const string DrinkStrings = { "water", "coffee" };
+static const std::string DrinkStrings = { "water", "coffee" };
 
 class Human {
     public:
-	    Human(string fName, string lName, int age);
-     	Human(string fName, string lName, int age, Sex sex);
-    	Human(string fName, string lName, int age, Gender gender);
-    	Human(string fName, string lName, int age, Sex sex, Gender gender);
+	    Human(std::string fName, std::string lName, int age);
+     	Human(std::string fName, std::string lName, int age, Sex sex);
+    	Human(std::string fName, std::string lName, int age, Gender gender);
+    	Human(std::string fName, std::string lName, int age, Sex sex, Gender gender);
     	~Human();
     	int age;
-    	string fName, lName;
-    	string pronouns[4];
+    	std::string fName, lName;
+    	std::string pronouns[4];
     	void birthday();
     	void eat(Food edible);
     	void drink(Drink drinkable);
@@ -31,23 +31,23 @@ class Human {
 	    Gender gender;
 };
 
-Human::Human(string fName, string lName, int age) {
+Human::Human(std::string fName, std::string lName, int age) {
 	this->fName = fName;
 	this->lName = lName;
 	this->age = age;
 }
 Human::~Human() {
-	cout << this->fName << " has died." << endl;
+	std::cout << this->fName << " has died." << endl;
 }
 void Human::birthday() {
 	this->age++;
-	cout << "Happy birthday, " << this->fName << "!" << endl;
+	std::cout << "Happy birthday, " << this->fName << "!" << endl;
 }
 void Human::eat(Food edible) {
-	cout << this->fName << " ate " << FoodStrings[edible] << "." << endl;
+	std::cout << this->fName << " ate " << FoodStrings[edible] << "." << endl;
 }
 void Human::drink(Drink drinkable) {
-	cout << this->fName << " drank " << DrinkStrings[drinkable] << "." << endl;
+	std::cout << this->fName << " drank " << DrinkStrings[drinkable] << "." << endl;
 }
 Sex Human::getSex() {
 	return this->sex;
