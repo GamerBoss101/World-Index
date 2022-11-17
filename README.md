@@ -11,4 +11,4 @@ A Library of random things turned into code using any coding Language you want. 
 3. You can make new folders and files just make sure you organize them
 
 ## Testing code
-To Test your code create a folder named `Testing` . This folder will be ignored when commiting to the repository.
+To Test your code create a folder named `test`. This folder will be ignored when commiting to the repository.

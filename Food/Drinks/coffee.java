@@ -1,10 +1,10 @@
-package Drinks;
+package Food.Drinks;
 
 public class coffee {
-    public String user;
-    public String type;
-    public int suger;
-    public int cream;
+    private String user;
+    private String type;
+    private int suger;
+    private int cream;
     public coffee(String user) {
         this.user = user;
     }
@@ -12,12 +12,12 @@ public class coffee {
         this.type = input;
         return this;
     }
-    public coffee setSugar(int input) {
-        this.suger = input;
+    public coffee setSugar(int amount) {
+        this.suger = amount;
         return this;
     }
-    public coffee setCream(int input) {
-        this.cream = input;
+    public coffee setCream(int amount) {
+        this.cream = amount;
         return this;
     }
     public String build() {
