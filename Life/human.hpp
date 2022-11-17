@@ -37,17 +37,17 @@ Human::Human(std::string fName, std::string lName, int age) {
 	this->age = age;
 }
 Human::~Human() {
-	std::cout << this->fName << " has died." << endl;
+	std::cout << this->fName << " has died." << std::endl;
 }
 void Human::birthday() {
 	this->age++;
-	std::cout << "Happy birthday, " << this->fName << "!" << endl;
+	std::cout << "Happy birthday, " << this->fName << "!" << std::endl;
 }
 void Human::eat(Food edible) {
-	std::cout << this->fName << " ate " << FoodStrings[edible] << "." << endl;
+	std::cout << this->fName << " ate " << FoodStrings[edible] << "." << std::endl;
 }
 void Human::drink(Drink drinkable) {
-	std::cout << this->fName << " drank " << DrinkStrings[drinkable] << "." << endl;
+	std::cout << this->fName << " drank " << DrinkStrings[drinkable] << "." << std::endl;
 }
 Sex Human::getSex() {
 	return this->sex;
@@ -59,6 +59,3 @@ void Human::setGender(Gender gender) {
 	this->gender = gender;
 }
 
-int main() {
-	Human elon = Human("Elon", "Musk", 50);
-}
