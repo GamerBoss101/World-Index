@@ -53,20 +53,24 @@ namespace unit {
             );
     }
 
-    template <std::integral T> money money::operator+(const T& cent_count) {
-        return money {whole_subdivision + cent_count};
+    template <std::integral T> money operator+(const money& money_value, const T& cent_count) {
+        return money {money_value.whole_subdivision + cent_count};
     }
-    
-    template <> money money::operator+ <money> (const money& money_subtracted) {
-        return money {whole_subdivision + money_subtracted.whole_subdivision};
+
+    template <std::integral T> money operator+(const T& cent_count, const money& money_value) {
+        return money_value + cent_count;
     }
 
     template <std::integral T> money money::operator-(const T& cent_count) {
-        return money {whole_subdivision - cent_count};
+        return whole_subdivision - cent_count;
+    }
+
+    template <> money money::operator-(const money& money_value) {
+        return money {whole_subdivision - money_value.whole_subdivision};
     }
     
-    template <> money money::operator- <money> (const money& money_subtracted) {
-        return money {whole_subdivision - money_subtracted.whole_subdivision};
+    template <std::integral T> operator-(const T& cent_count, const money& money_value) {
+        return money {cent_count - money_value.whole_subdivision};
     }
 }
 
