@@ -62,7 +62,7 @@ namespace unit {
     }
 
     template <std::integral T> money money::operator-(const T& cent_count) {
-        return whole_subdivision - cent_count;
+        return money {whole_subdivision - cent_count};
     }
 
     template <> money money::operator-(const money& money_value) {
