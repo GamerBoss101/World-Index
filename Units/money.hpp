@@ -5,6 +5,7 @@
 #include <locale>
 #include <string>
 #include <string_view>
+#include <concepts>
 
 
 namespace unit {
@@ -19,7 +20,17 @@ namespace unit {
         operator std::string ();
         operator std::string_view ();
 
-        friend std::ostream& operator<<(std::ostream&, const money&);
+        template <std::integral T = std::size_t> T cents();
+
+        friend std::ostream& operator<<(std::ostream&, const money&); friend bool operator==(const money&, const money&);
+        template <typename T = std::size_t> friend money operator+(const money&, const T&);
+        template <typename T = std::size_t> friend money operator+(const T&, const money&);
+
+        template <typename T = std::size_t> friend money operator-(const money&, const T&);
+        template <typename T = std::size_t> friend money operator-(const T&, const money&);
+
+        template <typename T = std::size_t> friend money operator*(const money&, const T&);
+        template <typename T = std::size_t> friend money operator/(const money&, const T&);
         
         private:
 
