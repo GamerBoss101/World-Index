@@ -23,14 +23,14 @@ namespace unit {
         template <std::integral T = std::size_t> T cents();
 
         friend std::ostream& operator<<(std::ostream&, const money&); friend bool operator==(const money&, const money&);
-        template <typename T = std::size_t> friend money operator+(const money&, const T&);
-        template <typename T = std::size_t> friend money operator+(const T&, const money&);
+        template <typename T> friend money operator+(const money&, const T&);
+        template <typename T> friend money operator+(const T&, const money&);
 
-        template <typename T = std::size_t> friend money operator-(const money&, const T&);
-        template <typename T = std::size_t> friend money operator-(const T&, const money&);
+        template <typename T> friend money operator-(const money&, const T&);
+        template <typename T> friend money operator-(const T&, const money&);
 
-        template <typename T = std::size_t> friend money operator*(const money&, const T&);
-        template <typename T = std::size_t> friend money operator/(const money&, const T&);
+        template <typename T> friend money operator*(const money&, const T&);
+        template <typename T> friend money operator/(const money&, const T&);
         
         private:
 
