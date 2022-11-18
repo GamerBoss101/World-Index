@@ -12,6 +12,7 @@
 namespace unit {
 
     struct money {
+        using cents = long long;
         std::string_view currency_name;
         const char* locale_name {"en_US.UTF-8"};
 
@@ -35,7 +36,7 @@ namespace unit {
         
         private:
 
-        std::size_t whole_subdivision; // ex: cents
+        cents whole_subdivision; // ex: cents
     };
 
 
@@ -50,6 +51,22 @@ namespace unit {
                 (money1.whole_subdivision == money2.whole_subdivision) &&
                 (strcmp(money1.locale_name, money2.locale_name) == 0)
             );
+    }
+
+    template <std::integral T> money money::operator+(const T& cent_count) {
+        return money {whole_subdivision + cent_count};
+    }
+    
+    template <> money money::operator+ <money> (const money& money_subtracted) {
+        return money {whole_subdivision + money_subtracted.whole_subdivision};
+    }
+
+    template <std::integral T> money money::operator-(const T& cent_count) {
+        return money {whole_subdivision - cent_count};
+    }
+    
+    template <> money money::operator- <money> (const money& money_subtracted) {
+        return money {whole_subdivision - money_subtracted.whole_subdivision};
     }
 }
 
