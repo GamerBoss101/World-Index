@@ -65,7 +65,7 @@ namespace unit {
         return money {whole_subdivision - cent_count};
     }
 
-    template <> money money::operator-(const money& money_value) {
+    template <> money money::operator- <money> (const money& money_value) {
         return money {whole_subdivision - money_value.whole_subdivision};
     }
     
