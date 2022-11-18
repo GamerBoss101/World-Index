@@ -6,13 +6,14 @@
 #include <string>
 #include <string_view>
 #include <concepts>
+#include <string.h>
 
 
 namespace unit {
 
     struct money {
         std::string_view currency_name;
-        auto locale_name {"en_US.UTF-8"};
+        const char* locale_name {"en_US.UTF-8"};
 
         operator float ();
         operator double ();
@@ -26,11 +27,11 @@ namespace unit {
         template <typename T> friend money operator+(const money&, const T&);
         template <typename T> friend money operator+(const T&, const money&);
 
-        template <typename T> friend money operator-(const money&, const T&);
+        template <typename T> money operator-(const T&);
         template <typename T> friend money operator-(const T&, const money&);
 
         template <typename T> friend money operator*(const money&, const T&);
-        template <typename T> friend money operator/(const money&, const T&);
+        template <typename T> money operator/(const T&);
         
         private:
 
@@ -43,6 +44,13 @@ namespace unit {
     money::operator std::string () { return (std::stringstream() << *this).str(); }
     money::operator const char* () { return static_cast<std::string>(*this).c_str(); }
     money::operator std::string_view () { return std::string_view(static_cast<const char*>(*this)); }
+
+    bool operator==(const money& money1, const money& money2) {
+        return (
+                (money1.whole_subdivision == money2.whole_subdivision) &&
+                (strcmp(money1.locale_name, money2.locale_name) == 0)
+            );
+    }
 }
 
 std::ostream& operator<<(std::ostream& out, const money& money_object) {
