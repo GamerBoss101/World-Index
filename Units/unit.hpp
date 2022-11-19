@@ -36,11 +36,11 @@ namespace unit {
     enum QuantitativeType { 
         Whole = std::size_t,
         Integer = long long,
-        Real = long double,
+        Continuous = long double,
     };
 
     template <QuantitativeType T, metric_prefix_ratio R = no_prefix>
-    struct unit {
+        struct unit {
         using metrix_prefix = R;
         T value {};
     };
