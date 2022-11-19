@@ -104,6 +104,16 @@ namespace unit {
         money operator*(const money& money_value, const T& floating_point_multiple) {
         return floating_point_multiple * money_value;
     }
+
+    template <std::integral T>
+        money money::operator/(const T& divisor) {
+            return money {whole_subdivision / divisor};
+    }
+
+    template <std::floating_point T>
+        money money::operator/(const T& divisor) {
+        return money {static_cast<money::cents>(whole_subdivision / divisor)};
+    }
 }
 
 std::ostream& operator<<(std::ostream& out, const money& money_object) {
