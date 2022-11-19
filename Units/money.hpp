@@ -11,6 +11,7 @@
 
 namespace unit {
 
+
     struct money {
         using cents = long long;
         std::string_view currency_name;
@@ -32,6 +33,7 @@ namespace unit {
         template <typename T> friend money operator-(const T&, const money&);
 
         template <typename T> friend money operator*(const money&, const T&);
+        template <typename T> friend money operator*(const T&, const money&);
         template <typename T> money operator/(const T&);
         
         private:
@@ -71,6 +73,14 @@ namespace unit {
     
     template <std::integral T> operator-(const T& cent_count, const money& money_value) {
         return money {cent_count - money_value.whole_subdivision};
+    }
+
+    template <std::integral T> money operator*(const money& money_value, const T& multiple) {
+        return money {money_value.whole_subdivision * multiple};
+    }
+
+    template <std::integral T> money operator*(const T& multiple, const money& money_value) {
+        return money_value * multiple;
     }
 }
 
