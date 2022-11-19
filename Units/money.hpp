@@ -55,32 +55,54 @@ namespace unit {
             );
     }
 
-    template <std::integral T> money operator+(const money& money_value, const T& cent_count) {
+    template <std::integral T>
+        money operator+(const money& money_value, const T& cent_count) {
         return money {money_value.whole_subdivision + cent_count};
     }
 
-    template <std::integral T> money operator+(const T& cent_count, const money& money_value) {
+    template <std::integral T>
+        money operator+(const T& cent_count, const money& money_value) {
         return money_value + cent_count;
     }
 
-    template <std::integral T> money money::operator-(const T& cent_count) {
+    template <>
+        money operator+ <money> (const money& money1, const money& money2) {
+        return money {money1.whole_subdivision + money2.whole_subdivision};
+    }
+
+    template <std::integral T>
+        money money::operator-(const T& cent_count) {
         return money {whole_subdivision - cent_count};
     }
 
-    template <> money money::operator- <money> (const money& money_value) {
+    template <>
+        money money::operator- <money> (const money& money_value) {
         return money {whole_subdivision - money_value.whole_subdivision};
     }
     
-    template <std::integral T> operator-(const T& cent_count, const money& money_value) {
+    template <std::integral T>
+        operator-(const T& cent_count, const money& money_value) {
         return money {cent_count - money_value.whole_subdivision};
     }
 
-    template <std::integral T> money operator*(const money& money_value, const T& multiple) {
+    template <std::integral T>
+        money operator*(const money& money_value, const T& multiple) {
         return money {money_value.whole_subdivision * multiple};
     }
 
-    template <std::integral T> money operator*(const T& multiple, const money& money_value) {
+    template <std::integral T>
+        money operator*(const T& multiple, const money& money_value) {
         return money_value * multiple;
+    }
+
+    template <std::floating_point T>
+        money operator*(const T& floating_point_multiple, const money& money_value) {
+        return money {static_cast<money::cents>(floating_point_multiple * money_value.whole_subdivision)};
+    }
+
+    template <std::floating_point T>
+        money operator*(const money& money_value, const T& floating_point_multiple) {
+        return floating_point_multiple * money_value;
     }
 }
 
