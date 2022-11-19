@@ -8,7 +8,7 @@ namespace unit {
 
 
     template <std::integral T>
-        bool power_of_10(T whole_number) {
+        constexpr bool constexpr_power_of_10(T whole_number) {
         if (whole_number == 1) return true;
 
         while (whole_number != 0) {
@@ -29,7 +29,7 @@ namespace unit {
         concept metric_prefix_ratio = requires {
             T::num;
             T::den;
-        } && power_of_10(T::num) && power_of_10(T::den) ||
+        } && constexpr_power_of_10(T::num) && constexpr_power_of_10(T::den) ||
         std::same_as<T, no_prefix>;
 
 
