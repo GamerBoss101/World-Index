@@ -34,15 +34,22 @@ namespace unit {
 
 
     enum QuantitativeType { 
-        Whole = std::size_t,
-        Integer = long long,
+        Whole = std::uintmax_t,
+        Integer = std::intmax_t,
         Continuous = long double,
     };
 
-    template <QuantitativeType T, metric_prefix_ratio R = no_prefix>
+    template <typename derived, QuantitativeType T, metric_prefix_ratio R = no_prefix>
         struct unit {
         using metrix_prefix = R;
+
         T value {};
+        int base_10_compensator {};
+
+        template <typename T> derived operator+(const T&);
+        template <typename T> derived operator-(const T&);
+        template <typename T> derived operator*(const T&);
+        template <typename T> derived operator/(const T&);
     };
 }
 
