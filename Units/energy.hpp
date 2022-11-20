@@ -4,5 +4,5 @@
 
 namespace unit { namespace energy {
     template <metric_prefix_ratio P>
-        struct joule : public unit<QuantitativeType::Continuous> {}
+        struct joule : public unit<joule, QuantitativeType::Continuous> {};
 }}
