@@ -39,7 +39,7 @@ namespace unit {
     struct unit;
 
     template <typename derived, QuantitativeType Q, metric_prefix_ratio R = no_prefix>
-        struct unit {
+        struct basic_unit {
         using metrix_prefix = R;
 
         Q value {};
