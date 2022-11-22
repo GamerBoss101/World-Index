@@ -39,8 +39,8 @@ namespace unit {
     struct unit;
 
     template <typename derived, QuantitativeType Q, metric_prefix_ratio R = no_prefix>
-        struct unit {
-        using metrix_prefix = R;
+        struct basic_unit {
+        using metric_prefix = R;
 
         Q value {};
         int base_10_compensator {};
