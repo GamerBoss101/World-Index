@@ -49,6 +49,8 @@ namespace unit {
         template <typename T> derived operator-(const T&);
         template <typename T> derived operator*(const T&);
         template <typename T> derived operator/(const T&);
+
+        template <metric_prefix_ratio P> operator derived<P> ();
     };
 }
 
