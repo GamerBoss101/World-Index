@@ -40,7 +40,7 @@ namespace unit {
 
     template <
         template <metric_prefix_ratio> struct derived_template,
-        QuantitativeType Q,
+        QuantitativeType Qt,
         metric_prefix_ratio R = no_prefix
     >   
     struct basic_unit {
@@ -51,10 +51,26 @@ namespace unit {
 
         protected:
 
-        Q value {};
+        Qt value {};
         int base_10_compensator {};
 
+        template <typename T>
+            concept same_unit_or_number =
+            same_unit<T> ||
+            std::integral<T> ||
+            std::floating_point<T>;
+
         public:
+
+        template <typename T>
+            static constexpr struct is_same_unit : std::false_type {};
+
+        template <metric_prefix_ratio matched_prefix>
+            static constexpr struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
+
+        template <typename U>
+            concept same_unit =
+            is_same_unit<T>::value;
 
         template <typename T> derived_specialization operator+(const T&);
         template <typename T> derived_specialization operator-(const T&);
