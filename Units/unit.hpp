@@ -55,7 +55,7 @@ namespace unit {
         int base_10_compensator {};
 
         template <typename T>
-            concept same_unit_or_number =
+            concept number_or_same_unit =
             same_unit<T> ||
             std::integral<T> ||
             std::floating_point<T>;
@@ -72,10 +72,10 @@ namespace unit {
             concept same_unit =
             is_same_unit<T>::value;
 
-        template <typename T> derived_specialization operator+(const T&);
-        template <typename T> derived_specialization operator-(const T&);
-        template <typename T> derived_specialization operator*(const T&);
-        template <typename T> derived_specialization operator/(const T&);
+        template <number_or_same_unit T> derived_specialization operator+(const T&);
+        template <number_or_same_unit T> derived_specialization operator-(const T&);
+        template <number_or_same_unit T> derived_specialization operator*(const T&);
+        template <number_or_same_unit T> derived_specialization operator/(const T&);
 
         template <metric_prefix_ratio P> operator derived_template<P> ();
     };
