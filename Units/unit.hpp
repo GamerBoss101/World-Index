@@ -38,19 +38,30 @@ namespace unit {
 
     struct unit;
 
-    template <typename derived, QuantitativeType Q, metric_prefix_ratio R = no_prefix>
-        struct basic_unit {
+    template <
+        template <metric_prefix_ratio> struct derived_template,
+        QuantitativeType Q,
+        metric_prefix_ratio R = no_prefix
+    >   
+    struct basic_unit {
+        private:
+
         using metric_prefix = R;
+        using derived_specialization = derived_template<metric_prefix>;
+
+        protected:
 
         Q value {};
         int base_10_compensator {};
 
-        template <typename T> derived operator+(const T&);
-        template <typename T> derived operator-(const T&);
-        template <typename T> derived operator*(const T&);
-        template <typename T> derived operator/(const T&);
+        public:
 
-        template <metric_prefix_ratio P> operator derived<P> ();
+        template <typename T> derived_specialization operator+(const T&);
+        template <typename T> derived_specialization operator-(const T&);
+        template <typename T> derived_specialization operator*(const T&);
+        template <typename T> derived_specialization operator/(const T&);
+
+        template <metric_prefix_ratio P> operator derived_template<P> ();
     };
 }
 
