@@ -63,10 +63,10 @@ namespace unit {
         public:
 
         template <typename T>
-            static constexpr struct is_same_unit : std::false_type {};
+            struct is_same_unit : std::false_type {};
 
         template <metric_prefix_ratio matched_prefix>
-            static constexpr struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
+            struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
 
         template <typename U>
             concept same_unit =
