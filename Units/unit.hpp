@@ -68,9 +68,11 @@ namespace unit {
         template <metric_prefix_ratio matched_prefix>
             struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
 
+        /*
         template <typename U>
             concept same_unit =
             is_same_unit<T>::value;
+        */
 
         template <number_or_same_unit T> derived_specialization operator+(const T&);
         template <number_or_same_unit T> derived_specialization operator-(const T&);
