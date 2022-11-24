@@ -54,11 +54,13 @@ namespace unit {
         Qt value {};
         int base_10_compensator {};
 
+        /*
         template <typename T>
             concept number_or_same_unit =
             same_unit<T> ||
             std::integral<T> ||
             std::floating_point<T>;
+        */
 
         public:
 
