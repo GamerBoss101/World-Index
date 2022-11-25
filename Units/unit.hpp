@@ -17,7 +17,6 @@ namespace unit {
 
             whole_number /= 10;
         }
-
         return false;
     }
 
@@ -27,7 +26,8 @@ namespace unit {
         concept metric_prefix_ratio = requires {
             T::num;
             T::den;
-        } && constexpr_power_of_10(T::num) && constexpr_power_of_10(T::den) ||
+        } &&
+        constexpr_power_of_10(T::num) && constexpr_power_of_10(T::den) ||
         std::same_as<T, no_prefix>;
 
     enum QuantitativeType { 
@@ -36,7 +36,21 @@ namespace unit {
         Continuous = long double,
     };
 
-    struct unit;
+    template <
+        template <metric_prefix_ratio>,
+        metric_prefix_ratio
+    > struct is_unit_specialization_of : std::false_type {};
+
+    template <
+        template <metric_prefix_ratio> struct unit_template,
+        metric_prefix_ratio M
+    > struct is_unit_specialization_of <unit_template, unit_template<M>> : std::true_type {};
+    
+    template <
+        typename T,
+        template <metric_prefix_ratio> struct unit_template
+    > concept unit_instantiation_of =
+    is_unit_specialization_of<unit_template, T>;
 
     template <
         template <metric_prefix_ratio> struct derived_template,
@@ -54,14 +68,6 @@ namespace unit {
         Qt value {};
         int base_10_compensator {};
 
-        /*
-        template <typename T>
-            concept number_or_same_unit =
-            same_unit<T> ||
-            std::integral<T> ||
-            std::floating_point<T>;
-        */
-
         public:
 
         template <typename T>
@@ -69,12 +75,6 @@ namespace unit {
 
         template <metric_prefix_ratio matched_prefix>
             struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
-
-        /*
-        template <typename U>
-            concept same_unit =
-            is_same_unit<T>::value;
-        */
 
         template <number_or_same_unit T> derived_specialization operator+(const T&);
         template <number_or_same_unit T> derived_specialization operator-(const T&);
