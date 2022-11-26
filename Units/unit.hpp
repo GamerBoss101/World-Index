@@ -61,7 +61,7 @@ namespace unit {
         typename T,
         template <metric_prefix_ratio> struct unit_template
     > concept unit_instantiation_of =
-    is_unit_specialization_of<unit_template, T>;
+    is_unit_specialization_of<unit_template, T>::value;
 
 
     /* Inheritable template struct for units */
