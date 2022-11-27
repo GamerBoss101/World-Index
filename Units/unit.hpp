@@ -61,7 +61,7 @@ namespace unit {
         typename T,
         template <metric_prefix_ratio> struct unit_template
     > concept unit_instantiation_of =
-    is_unit_specialization_of<unit_template, T>;
+    is_unit_specialization_of<unit_template, T>::value;
 
 
     /* Inheritable template struct for units */
@@ -89,10 +89,15 @@ namespace unit {
         template <metric_prefix_ratio matched_prefix>
             struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
 
-        template <number_or_same_unit T> derived_specialization operator+(const T&);
-        template <number_or_same_unit T> derived_specialization operator-(const T&);
-        template <number_or_same_unit T> derived_specialization operator*(const T&);
-        template <number_or_same_unit T> derived_specialization operator/(const T&);
+        template <typename T> derived_specialization operator+(const T&);
+        template <typename T> derived_specialization operator-(const T&);
+        template <typename T> derived_specialization operator*(const T&);
+        template <typename T> derived_specialization operator/(const T&);
+
+        template <typename T> derived_specialization operator+=(const T&);
+        template <typename T> derived_specialization operator-=(const T&);
+        template <typename T> derived_specialization operator*=(const T&);
+        template <typename T> derived_specialization operator/=(const T&);
 
         template <metric_prefix_ratio P> operator derived_template<P> ();
     };
