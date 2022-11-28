@@ -60,7 +60,7 @@ namespace unit {
     template <
         typename T,
         template <metric_prefix_ratio> struct unit_template
-    > concept unit_instantiation_of =
+    > concept unit_specialization_of =
     is_unit_specialization_of<unit_template, T>::value;
 
 
@@ -82,7 +82,7 @@ namespace unit {
         template <metric_prefix_ratio> struct derived_template,
         QuantitativeType Qt,
         metric_prefix_ratio R = no_prefix
-    >   
+    >
     struct basic_unit {
         private:
 
@@ -116,7 +116,5 @@ namespace unit {
 
         template <metric_prefix_ratio P> operator derived_template<P> ();
     };
-
-
 }
 
