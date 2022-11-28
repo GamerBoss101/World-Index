@@ -64,6 +64,19 @@ namespace unit {
     is_unit_specialization_of<unit_template, T>::value;
 
 
+    // Checks if a type 'T' is a unit
+    template <typename T>
+        struct is_unit {
+            static const bool value {
+                requires { requires T::is_unit }
+            };
+        };
+
+    // Concept implementation of 'is_unit'
+    template <typename T>
+        concept unit = is_unit<T>;
+
+
     /* Inheritable template struct for units */
     template <
         template <metric_prefix_ratio> struct derived_template,
@@ -83,6 +96,8 @@ namespace unit {
 
         public:
 
+        static const bool is_unit {true};
+
         template <typename T>
             struct is_same_unit : std::false_type {};
 
@@ -101,7 +116,7 @@ namespace unit {
 
         template <metric_prefix_ratio P> operator derived_template<P> ();
     };
+
+
 }
-
-
 
