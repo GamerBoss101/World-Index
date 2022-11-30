@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <ratio>
 #include <concepts>
+#include <type_traits>
 
 
 namespace unit {
@@ -83,7 +84,8 @@ namespace unit {
         protected: int base_10_compensator {};
     };
 
-    /* Inheritable template struct for units */
+
+    /* Inheritable template struct for implementing unit templates */
     template <
         template <metric_prefix_ratio> struct derived_template,
         QuantitativeType Qt,
@@ -96,12 +98,6 @@ namespace unit {
             no_include_base_10_compensator,
             include_base_10_compensator
         > {
-        private:
-
-        using metric_prefix = R;
-        using derived_specialization = derived_template<metric_prefix>;
-        using quantative_type = Qt;
-
         protected:
 
         Qt value {};
@@ -111,24 +107,26 @@ namespace unit {
         static const int power {exp_power};
         static const bool is_unit {true};
 
+        using metric_prefix = R;
+        using basic_unit_derived_template = derived_template;
+        using derived_specialization = derived_template<metric_prefix, exp_power>;
+        using quantative_type = Qt;
+
         template <typename T>
             struct is_same_unit : std::false_type {};
 
         template <metric_prefix_ratio matched_prefix>
             struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
 
-        template <typename T> derived_specialization operator+(const T&);
-        template <unit T> derived_specialization operator+(const T&) requires T::power == power;
-        template <unit_specialization_of<derived_template> T> derived_specialization operator+(const T&);
-        template <> derived_specialization operator+ <derived_specialization> (const derived_specialization&);
-        template <unit T> derived_specialization operator-(const T&);
-        template <unit T> derived_specialization operator*(const T&);
-        template <unit T> derived_specialization operator/(const T&);
+        derived_specialization operator+(const auto&);
+        derived_specialization operator-(const auto&);
+        derived_specialization operator*(const auto&);
+        derived_specialization operator/(const auto&);
 
-        template <unit T> derived_specialization operator+=(const T&);
-        template <unit T> derived_specialization operator-=(const T&);
-        template <unit T> derived_specialization operator*=(const T&);
-        template <unit T> derived_specialization operator/=(const T&);
+        derived_specialization operator+=(const auto&);
+        derived_specialization operator-=(const auto&);
+        derived_specialization operator*=(const auto&);
+        derived_specialization operator/=(const auto&);
 
         template <metric_prefix_ratio P> operator derived_template<P> ();
     };
