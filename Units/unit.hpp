@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <ratio>
 #include <concepts>
+#include <type_traits>
 
 
 namespace unit {
@@ -60,28 +61,56 @@ namespace unit {
     template <
         typename T,
         template <metric_prefix_ratio> struct unit_template
-    > concept unit_instantiation_of =
+    > concept unit_specialization_of =
     is_unit_specialization_of<unit_template, T>::value;
 
 
-    /* Inheritable template struct for units */
+    // Checks if a type 'T' is a unit
+    template <typename T>
+        struct is_unit {
+            static const bool value {
+                requires { requires T::is_unit }
+            };
+        };
+
+    // Concept implementation of 'is_unit'
+    template <typename T>
+        concept unit = is_unit<T>;
+
+    
+    // For Integer or Whole number units. Helps with addition accuracy for different unit prefixes
+    struct no_include_base_10_compensator {};
+    struct include_base_10_compensator {
+        protected: int base_10_compensator {};
+    };
+
+
+    /* Inheritable template struct for implementing unit templates */
     template <
         template <metric_prefix_ratio> struct derived_template,
         QuantitativeType Qt,
+        int exp_power = 1,
         metric_prefix_ratio R = no_prefix
-    >   
-    struct basic_unit {
-        private:
-
-        using metric_prefix = R;
-        using derived_specialization = derived_template<metric_prefix>;
-
+    >
+    struct basic_unit :
+        std::conditional<
+            Qt == QuantitativeType::Continuous,
+            no_include_base_10_compensator,
+            include_base_10_compensator
+        > {
         protected:
 
         Qt value {};
-        int base_10_compensator {};
 
         public:
+
+        static const int power {exp_power};
+        static const bool is_unit {true};
+
+        using metric_prefix = R;
+        using basic_unit_derived_template = derived_template;
+        using derived_specialization = derived_template<metric_prefix, exp_power>;
+        using quantative_type = Qt;
 
         template <typename T>
             struct is_same_unit : std::false_type {};
@@ -89,19 +118,17 @@ namespace unit {
         template <metric_prefix_ratio matched_prefix>
             struct is_same_unit<derived_template<matched_prefix>> : std::true_type {};
 
-        template <typename T> derived_specialization operator+(const T&);
-        template <typename T> derived_specialization operator-(const T&);
-        template <typename T> derived_specialization operator*(const T&);
-        template <typename T> derived_specialization operator/(const T&);
+        derived_specialization operator+(const auto&);
+        derived_specialization operator-(const auto&);
+        derived_specialization operator*(const auto&);
+        derived_specialization operator/(const auto&);
 
-        template <typename T> derived_specialization operator+=(const T&);
-        template <typename T> derived_specialization operator-=(const T&);
-        template <typename T> derived_specialization operator*=(const T&);
-        template <typename T> derived_specialization operator/=(const T&);
+        derived_specialization operator+=(const auto&);
+        derived_specialization operator-=(const auto&);
+        derived_specialization operator*=(const auto&);
+        derived_specialization operator/=(const auto&);
 
         template <metric_prefix_ratio P> operator derived_template<P> ();
     };
 }
-
-
 
