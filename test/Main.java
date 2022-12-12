@@ -7,5 +7,6 @@ public class Main {
         float rope = Force.calculateForce(Force.forceType.TENSION, 10);
         float ropeAtAngle = Force.getForceAtAngle(rope, 45, Force.axisType.Y);
         System.out.println(ropeAtAngle);
+        //System.out.println(Force.calculateForce(Force.forceType.FRICTION, 10, 0.5f));
     }
 }

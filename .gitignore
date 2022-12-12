@@ -1,4 +1,5 @@
 # Dependency directories
 node_modules/
 .vscode/
-test/dist/*
+test/
+tests/
