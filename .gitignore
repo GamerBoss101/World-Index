@@ -3,3 +3,5 @@ node_modules/
 .vscode/
 test/
 tests/
+Math/__pycache__/basics.cpython-310.pyc
+Math/Main.py
