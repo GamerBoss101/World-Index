@@ -1,6 +1,4 @@
 
 class Life {
-    constructor() {
-        this
-    }
+    this
 }
